@@ -2,7 +2,7 @@
 	"name": "isp",
 	"displayName": "isp",
 	"description": "stm32 isp download tool",
-	"version": "0.0.1",
+	"version": "0.0.6",
 	"repository": "https://github.com/mbossX/isp-vscode.git",
 	"publisher": "jiyun-tech",
 	"engines": {
@@ -13,7 +13,7 @@
 	],
 	"icon": "icon.png",
 	"activationEvents": [
-		"onStartupFinished"
+		"*"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
