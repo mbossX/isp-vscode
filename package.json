@@ -2,8 +2,9 @@
 	"name": "isp",
 	"displayName": "isp",
 	"description": "stm32 isp download tool",
-	"version": "0.0.7",
+	"version": "0.0.10",
 	"repository": "https://github.com/mbossX/isp-vscode.git",
+	"license": "MIT",
 	"publisher": "jiyun-tech",
 	"engines": {
 		"vscode": "^1.63.0"
@@ -28,19 +29,19 @@
 			"properties": {
 				"isp.hex": {
 					"type": "string",
-					"scope": "machine",
+					"scope": "machine-overridable",
 					"markdownDescription": ".hex file path to download",
 					"default": ""
 				},
 				"isp.com": {
 					"type": "string",
-					"scope": "machine",
+					"scope": "machine-overridable",
 					"markdownDescription": "serial port",
 					"default": "COM3"
 				},
 				"isp.baud": {
 					"type": "number",
-					"scope": "machine",
+					"scope": "machine-overridable",
 					"markdownDescription": "serial baud rate",
 					"default": 115200
 				}

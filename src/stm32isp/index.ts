@@ -1,6 +1,7 @@
 /* eslint-disable no-throw-literal */
 import * as SerialPort from 'serialport';
 import * as fs from 'fs';
+import * as path from 'path';
 import * as vscode from 'vscode';
 import hex2bin from './hex';
 
@@ -14,15 +15,18 @@ export default class Stm32Isp {
   constructor(ch: vscode.OutputChannel) {
     this.channel = ch;
     const cfg = vscode.workspace.getConfiguration('isp');
-    const hexPath = cfg.get('hex') as string;
+    let hexPath = cfg.get('hex') as string;
     const comPort = cfg.get('com') as string || 'COM3';
     const baudRate = cfg.get('baud') as number || 115200;
     
     if (!hexPath) {
       throw 'can not get hex file path';
     }
+    if (!path.isAbsolute(hexPath) && vscode.workspace.workspaceFolders) {
+      hexPath = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, hexPath);
+    }
     if (!fs.existsSync(hexPath)) {
-      throw `hex ${hexPath} not exists`;
+      throw `hex ${hexPath} not exists`;vscode.workspace.rootPath;
     }
     this.hexData = hex2bin(hexPath);
 
