@@ -2,7 +2,7 @@
 	"name": "isp",
 	"displayName": "isp",
 	"description": "stm32 isp download tool",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"repository": "https://github.com/mbossX/isp-vscode.git",
 	"publisher": "jiyun-tech",
 	"engines": {
@@ -57,7 +57,7 @@
 		"pretest": "npm run compile-tests && npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js",
-		"login": "vsce login jiyun-tech z5vht233pb4rpl2lpsnu7iwy3pilckerrld5pohspxf3sd4wfgzq",
+		"login": "vsce login jiyun-tech cjfsaytnv2wjdzcbj4e33kn4vgjcixn73cochiauohexayp7b6mq",
 		"publish": "vsce publish"
 	},
 	"dependencies": {

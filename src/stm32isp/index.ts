@@ -69,12 +69,16 @@ export default class Stm32Isp {
 
   private async sync() {
     this.channel.appendLine('get syncing...');
+    let retry = 10;
     while (true) {
       this.port.write([0x7F]);
-      if (!await this.waitAck(1000)) {
+      if (!await this.waitAck(1000) && --retry > 0) {
         this.channel.appendLine('please reset board, try again');
         continue;
       } else {
+        if (retry < 1) {
+          throw 'too many times retry, exit';
+        }
         break;
       }
     }
