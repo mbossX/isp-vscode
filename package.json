@@ -2,7 +2,7 @@
 	"name": "isp",
 	"displayName": "isp",
 	"description": "stm32 isp download tool",
-	"version": "0.0.10",
+	"version": "0.0.13",
 	"repository": "https://github.com/mbossX/isp-vscode.git",
 	"license": "MIT",
 	"publisher": "jiyun-tech",
@@ -13,6 +13,9 @@
 		"Other"
 	],
 	"icon": "icon.png",
+	"extensionKind": [
+		"workspace"
+	],
 	"activationEvents": [
 		"*"
 	],
@@ -21,28 +24,28 @@
 		"commands": [
 			{
 				"command": "isp.execute",
-				"title": "isp download"
+				"title": "%extension.commands.execute.title%"
 			}
 		],
 		"configuration": {
-			"title": "isp",
+			"title": "%extension.name%",
 			"properties": {
 				"isp.hex": {
 					"type": "string",
-					"scope": "machine-overridable",
-					"markdownDescription": ".hex file path to download",
-					"default": ""
+          "description": "%extension.settings.hex%",
+					"default": "./xxx.hex"
 				},
 				"isp.com": {
 					"type": "string",
-					"scope": "machine-overridable",
-					"markdownDescription": "serial port",
+          "description": "%extension.settings.com%",
 					"default": "COM3"
 				},
 				"isp.baud": {
 					"type": "number",
-					"scope": "machine-overridable",
-					"markdownDescription": "serial baud rate",
+          "enum": [
+						300,1200,2400,4800,9600,19200,38400,57600,74880,115200,230400,25e4
+					],
+          "description": "%extension.settings.baud%",
 					"default": 115200
 				}
 			}
@@ -58,11 +61,10 @@
 		"pretest": "npm run compile-tests && npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js",
-		"login": "vsce login jiyun-tech cjfsaytnv2wjdzcbj4e33kn4vgjcixn73cochiauohexayp7b6mq",
+		"login": "vsce login jiyun-tech i6b7aetlizyjsk37zhbt7y3cpuoqyjlrua7iqsvomppliqc7ukna",
 		"publish": "vsce publish"
 	},
 	"dependencies": {
-		"serialport": "9.2.8"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.4",
@@ -72,13 +74,19 @@
 		"@typescript-eslint/eslint-plugin": "^5.1.0",
 		"@typescript-eslint/parser": "^5.1.0",
 		"@vscode/test-electron": "^1.6.2",
+    "copy-webpack-plugin": "11.0.0",
 		"electron-rebuild": "^3.2.5",
 		"eslint": "^8.1.0",
 		"glob": "^7.1.7",
 		"mocha": "^9.1.3",
+    "serialport": "10.4.0",
 		"ts-loader": "^9.2.5",
 		"typescript": "^4.4.4",
+    "vsce": "2.9.3",
 		"webpack": "^5.52.1",
 		"webpack-cli": "^4.8.0"
-	}
+	},
+  "extensionDependencies": [
+    "ms-vscode.vscode-serial-monitor"
+  ]
 }

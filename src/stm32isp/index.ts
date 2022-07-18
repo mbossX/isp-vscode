@@ -1,24 +1,27 @@
 /* eslint-disable no-throw-literal */
-import * as SerialPort from 'serialport';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { SerialPort, SerialPortOpenOptions } from 'serialport';
+
 import hex2bin from './hex';
 
 export default class Stm32Isp {
-  private port!: any;
+  private port!: SerialPort;
   private lastData = [] as number[];
   private dataResolve: ((data: number[]) => void) | null = null;
   private hexData: number[] = [];
   private channel!: vscode.OutputChannel;
+  private serialPortCtor!: new (..._args: any[]) => SerialPort;
 
   constructor(ch: vscode.OutputChannel) {
+    this.loadLib();
     this.channel = ch;
     const cfg = vscode.workspace.getConfiguration('isp');
     let hexPath = cfg.get('hex') as string;
     const comPort = cfg.get('com') as string || 'COM3';
     const baudRate = cfg.get('baud') as number || 115200;
-    
+
     if (!hexPath) {
       throw 'can not get hex file path';
     }
@@ -26,21 +29,32 @@ export default class Stm32Isp {
       hexPath = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, hexPath);
     }
     if (!fs.existsSync(hexPath)) {
-      throw `hex ${hexPath} not exists`;vscode.workspace.rootPath;
+      throw `hex ${hexPath} not exists`; vscode.workspace.rootPath;
     }
     this.hexData = hex2bin(hexPath);
 
-    this.port = new SerialPort(comPort, {
+    this.port = new this.serialPortCtor({
+      path: comPort,
       baudRate,
       parity: 'even',
       dataBits: 8,
       stopBits: 1,
       autoOpen: false
-    });
+    } as SerialPortOpenOptions<any>);
 
     this.port.on('data', (data: number[]) => {
       this.dataResolve?.(data);
     });
+  }
+
+  private loadLib() {
+    try {
+      const serialMonitorExt = vscode.extensions.all.find(v => v.id === 'ms-vscode.vscode-serial-monitor');
+      const pp = path.join((serialMonitorExt?.extensionPath as string), './dist/node_modules', 'serialport');
+      this.serialPortCtor = eval(`require("${pp.replace(/\\/g, '\\\\')}").SerialPort`);
+    } catch {
+      throw 'can not load SerialPort library!';
+    }
   }
 
   private waitAck(timeout = 3000) {
@@ -59,7 +73,7 @@ export default class Stm32Isp {
 
   private open() {
     return new Promise(res => {
-      this.port.open((err: string) => {
+      this.port.open((err) => {
         res(!err);
       });
     });

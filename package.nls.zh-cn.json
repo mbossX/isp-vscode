@@ -1,0 +1,13 @@
+{
+	"extension.name": "ISP",
+	"extension.tool.title": "下载 HEX",
+	"extension.tool.tips": "ISP 下载程序到板子",
+	"extension.statusbar.build.title": "编译",
+	"extension.statusbar.build.tips": "编译 Keil 项目",
+	"extension.statusbar.rebuild.title": "重新编译",
+	"extension.statusbar.rebuild.tips": "重新编译 Keil 项目",
+  "extension.commands.execute.title": "ISP: 下载",
+	"extension.settings.hex": "待下载的 .hex 文件路径",
+	"extension.settings.com": "连接的串口号",
+	"extension.settings.baud": "串口波特率"
+}

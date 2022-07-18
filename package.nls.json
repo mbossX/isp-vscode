@@ -1,0 +1,13 @@
+{
+	"extension.name": "ISP",
+	"extension.tool.title": "Download HEX",
+	"extension.tool.tips": "ISP download hex to board",
+	"extension.statusbar.build.title": "Build",
+	"extension.statusbar.build.tips": "Build keil project",
+	"extension.statusbar.rebuild.title": "ReBuild",
+	"extension.statusbar.rebuild.tips": "ReBuild keil project",
+  "extension.commands.execute.title": "ISP: Download",
+	"extension.settings.hex": ".hex file path to download",
+	"extension.settings.com": "Serial port number",
+	"extension.settings.baud": "Serial baud rate"
+}
